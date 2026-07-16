@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============ SEO / SOCIAL META ============ -->
+  <title>Sodalium — Managed Services, Done as Partners</title>
+  <meta name="description" content="Sodalium is an international managed-services company that runs the day-to-day operations behind growing businesses — customer support, CRM, payments, compliance, content and marketing — across many industries and three continents." />
+  <meta name="theme-color" content="#16204F" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sodalium — Managed Services, Done as Partners" />
+  <meta property="og:description" content="The operations behind your business, in expert hands. One partner for the operational backbone of your company — across many industries and three continents." />
+  <meta property="og:site_name" content="Sodalium" />
+  <!-- TODO: replace with your canonical URL and social share image -->
+  <meta property="og:url" content="https://www.sodalium.com/" />
+  <meta property="og:image" content="https://www.sodalium.com/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sodalium — Managed Services, Done as Partners" />
+  <meta name="twitter:description" content="The operations behind your business, in expert hands." />
+
+  <!-- Inline SVG favicon: minimal monochrome linked motif (two interlocking rings) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316204F'/%3E%3Cg fill='none' stroke='%23E9B949' stroke-width='2.4'%3E%3Ccircle cx='13' cy='16' r='6'/%3E%3Ccircle cx='19' cy='16' r='6'/%3E%3C/g%3E%3C/svg%3E" />
+
+  <!-- ============ FONTS ============ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- ============ TAILWIND (CDN) ============ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extend Tailwind with the Sodalium brand tokens so utilities read semantically.
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navydeep: '#16204F', // deep navy — dark section backgrounds
+            navy:     '#1E2761', // primary brand navy
+            gold:     '#E9B949', // primary accent (sparing)
+            teal:     '#3DB8B0', // secondary accent
+            ice:      '#CADCFC', // soft accent / text on dark
+            ink:      '#1B2240', // body text on light
+            muted:    '#6B7494', // secondary text
+            card:     '#F4F7FC', // light card background
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+          borderRadius: {
+            xl2: '12px',
+          },
+          maxWidth: {
+            content: '1200px',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ============ CUSTOM PROPERTIES, BASE, KEYFRAMES ============ -->
+  <style>
+    :root {
+      --navy-deep: #16204F;
+      --navy: #1E2761;
+      --gold: #E9B949;
+      --teal: #3DB8B0;
+      --ice: #CADCFC;
+      --ink: #1B2240;
+      --muted: #6B7494;
+      --card: #F4F7FC;
+      --white: #FFFFFF;
+    }
+
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--white); }
+
+    /* Display serif utility with optical sizing for large headings */
+    .font-display { font-family: 'Fraunces', 'Playfair Display', Georgia, serif; font-optical-sizing: auto; }
+
+    /* Section eyebrow: thin gold rule + uppercase label — the repeated motif carried across sections */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .625rem;
+      font-size: .75rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: ""; width: 2rem; height: 2px; background: var(--gold); border-radius: 2px; display: inline-block;
+    }
+
+    /* Soft card shadow */
+    .shadow-soft { box-shadow: 0 10px 30px -12px rgba(22, 32, 79, .18); }
+    .shadow-softer { box-shadow: 0 6px 20px -10px rgba(22, 32, 79, .14); }
+
+    /* Card hover lift */
+    .lift { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -16px rgba(22, 32, 79, .28); }
+
+    /* Icon-in-circle motif */
+    .icon-circle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 3rem; height: 3rem; border-radius: 9999px; flex: none;
+    }
+
+    /* Sticky header transition */
+    #site-header { transition: background-color .35s ease, box-shadow .35s ease, backdrop-filter .35s ease; }
+    #site-header.scrolled {
+      background-color: var(--navy-deep);
+      box-shadow: 0 6px 24px -12px rgba(0,0,0,.5);
+    }
+
+    /* Focus-visible accessibility ring */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 4px;
+    }
+
+    /* Scroll-reveal base state */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; will-change: opacity, transform; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    @keyframes floatSlow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .float-slow { animation: floatSlow 9s ease-in-out infinite; }
+
+    /* Respect reduced-motion: disable reveal offset, floating, smooth scroll */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .lift { transition: none; }
+      .float-slow { animation: none; }
+    }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute; left: -999px; top: .5rem; z-index: 100;
+      background: var(--gold); color: var(--navy-deep); padding: .5rem 1rem; border-radius: 8px; font-weight: 600;
+    }
+    .skip-link:focus { left: .5rem; }
+
+    /* Subtle dotted/grid texture for dark sections (sector-neutral, abstract) */
+    .grid-texture {
+      background-image: radial-gradient(rgba(202,220,252,.10) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+  </style>
+</head>
+
+<body class="font-sans text-ink bg-white">
+  <a href="#services" class="skip-link">Skip to content</a>
+
+  <!-- =========================================================
+       1. HEADER / NAVIGATION  (sticky, transparent → solid navy)
+  ========================================================== -->
+  <header id="site-header" class="fixed top-0 inset-x-0 z-50">
+    <div class="max-w-content mx-auto px-5 sm:px-8">
+      <div class="flex items-center justify-between h-[74px]">
+
+        <!-- Wordmark + linked mark -->
+        <a href="#top" class="flex items-center gap-2.5 group" aria-label="Sodalium — home">
+          <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" class="flex-none">
+            <g fill="none" stroke="#E9B949" stroke-width="2.2">
+              <circle cx="13" cy="16" r="6.5"></circle>
+              <circle cx="19" cy="16" r="6.5"></circle>
+            </g>
+          </svg>
+          <span class="font-display text-white text-2xl font-600 tracking-tight">Sodalium</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden lg:flex items-center gap-8" aria-label="Primary">
+          <a href="#services"   class="text-ice/85 hover:text-white text-sm font-500 transition-colors">Services</a>
+          <a href="#industries" class="text-ice/85 hover:text-white text-sm font-500 transition-colors">Industries</a>
+          <a href="#why"        class="text-ice/85 hover:text-white text-sm font-500 transition-colors">Why Sodalium</a>
+          <a href="#global"     class="text-ice/85 hover:text-white text-sm font-500 transition-colors">Global</a>
+          <a href="#about"      class="text-ice/85 hover:text-white text-sm font-500 transition-colors">About</a>
+          <a href="#contact"    class="text-ice/85 hover:text-white text-sm font-500 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Primary CTA (desktop) -->
+        <a href="#contact" class="hidden lg:inline-flex items-center gap-2 bg-gold text-navydeep font-600 text-sm px-5 py-2.5 rounded-xl2 shadow-softer hover:brightness-105 transition">
+          Talk to us
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button id="nav-toggle" class="lg:hidden inline-flex items-center justify-center w-11 h-11 text-white rounded-lg"
+                aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg id="icon-open" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg id="icon-close" class="hidden" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile slide-down menu -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-navydeep border-t border-white/10">
+      <nav class="px-5 py-6 flex flex-col gap-1" aria-label="Mobile">
+        <a href="#services"   class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3 border-b border-white/5">Services</a>
+        <a href="#industries" class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3 border-b border-white/5">Industries</a>
+        <a href="#why"        class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3 border-b border-white/5">Why Sodalium</a>
+        <a href="#global"     class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3 border-b border-white/5">Global</a>
+        <a href="#about"      class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3 border-b border-white/5">About</a>
+        <a href="#contact"    class="mobile-link text-ice/90 hover:text-white text-lg font-500 py-3">Contact</a>
+        <a href="#contact" class="mobile-link mt-4 inline-flex justify-center items-center bg-gold text-navydeep font-600 px-5 py-3 rounded-xl2">Talk to us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- =========================================================
+         2. HERO  (dark navy)
+    ========================================================== -->
+    <section class="relative bg-navydeep grid-texture overflow-hidden">
+      <!-- Abstract, sector-neutral gradient glows -->
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+        <div class="absolute -top-24 -right-24 w-[36rem] h-[36rem] rounded-full blur-3xl opacity-30 float-slow"
+             style="background: radial-gradient(circle, rgba(61,184,176,.55), transparent 62%);"></div>
+        <div class="absolute -bottom-32 -left-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-25"
+             style="background: radial-gradient(circle, rgba(30,39,97,.9), transparent 60%);"></div>
+      </div>
+
+      <div class="relative max-w-content mx-auto px-5 sm:px-8 pt-36 pb-24 sm:pt-44 sm:pb-32">
+        <div class="max-w-3xl">
+          <p class="eyebrow text-gold reveal">Managed services, done as partners</p>
+
+          <h1 class="reveal mt-6 font-display text-white font-600 leading-[1.05] tracking-tight text-4xl sm:text-6xl lg:text-[4.25rem]">
+            The operations behind your business, in expert hands.
+          </h1>
+
+          <p class="reveal mt-7 text-ice/85 text-lg sm:text-xl leading-relaxed max-w-2xl">
+            Sodalium runs the day-to-day work that keeps companies growing — customer support, CRM, payments,
+            compliance, content and marketing — for businesses across many industries and three continents.
+          </p>
+
+          <div class="reveal mt-9 flex flex-col sm:flex-row gap-4">
+            <a href="#contact" class="inline-flex justify-center items-center gap-2 bg-gold text-navydeep font-600 px-7 py-3.5 rounded-xl2 shadow-soft hover:brightness-105 transition">
+              Talk to us
+            </a>
+            <a href="#services" class="inline-flex justify-center items-center gap-2 border border-white/25 text-white font-500 px-7 py-3.5 rounded-xl2 hover:bg-white/5 hover:border-white/40 transition">
+              Explore our services
+            </a>
+          </div>
+
+          <p class="reveal mt-10 text-sm text-ice/55">
+            Trusted by international businesses across the Americas, Europe and beyond.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         3. TRUST / STATS BAR  (light, four items)
+    ========================================================== -->
+    <section aria-label="At a glance" class="bg-white border-b border-slate-100">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-14">
+        <dl class="grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6">
+          <div class="reveal text-center lg:border-r border-slate-200/70 last:border-0">
+            <dt class="font-display text-navy text-5xl font-600">9</dt>
+            <dd class="mt-2 text-sm text-muted max-w-[14rem] mx-auto">service lines under one roof</dd>
+          </div>
+          <div class="reveal text-center lg:border-r border-slate-200/70">
+            <dt class="font-display text-navy text-5xl font-600">6</dt>
+            <dd class="mt-2 text-sm text-muted max-w-[14rem] mx-auto">countries, one connected team</dd>
+          </div>
+          <div class="reveal text-center lg:border-r border-slate-200/70">
+            <dt class="font-display text-navy text-5xl font-600">24/7</dt>
+            <dd class="mt-2 text-sm text-muted max-w-[14rem] mx-auto">multilingual coverage</dd>
+          </div>
+          <div class="reveal text-center">
+            <dt class="font-display text-navy text-5xl font-600">Many</dt>
+            <dd class="mt-2 text-sm text-muted max-w-[14rem] mx-auto">industries served</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         4. SERVICES  (light)
+    ========================================================== -->
+    <section id="services" class="bg-card scroll-mt-20">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="max-w-2xl reveal">
+          <p class="eyebrow text-navy/70">What we do</p>
+          <h2 class="mt-5 font-display text-navy text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+            A full suite of managed services
+          </h2>
+          <p class="mt-5 text-muted text-lg leading-relaxed">
+            One partner for the operational backbone of your business — so your team can focus on growth.
+          </p>
+        </div>
+
+        <!-- Responsive card grid. Each card: icon-in-circle + title + one line -->
+        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- 1 Customer Support -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-navy/5 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Customer Support</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">24/7 multilingual support across voice, chat and email, delivered as an extension of your brand.</p>
+          </article>
+
+          <!-- 2 CRM & Retention -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-teal/10 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1 7.8 7.8 7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">CRM &amp; Retention</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Lifecycle campaigns and one-to-one engagement that keep your customers active and loyal.</p>
+          </article>
+
+          <!-- 3 Payments Operations -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-navy/5 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Payments Operations</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Provider management, processing, reconciliation and dispute handling, run cleanly end to end.</p>
+          </article>
+
+          <!-- 4 Compliance -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-teal/10 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Compliance</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Process, monitoring and reporting that keep you aligned with the rules in every market you serve.</p>
+          </article>
+
+          <!-- 5 Legal Support -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-navy/5 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 7h14M7 7l-3 6a3 3 0 0 0 6 0L7 7zM17 7l-3 6a3 3 0 0 0 6 0l-3-6zM8 21h8"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Legal Support</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Contracts, licensing and corporate support to keep your operations on solid ground.</p>
+          </article>
+
+          <!-- 6 Content -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-teal/10 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Content</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">On-brand content produced at scale, in the languages your customers speak.</p>
+          </article>
+
+          <!-- 7 SEO -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-navy/5 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">SEO</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Organic growth built on technical rigour and content that ranks.</p>
+          </article>
+
+          <!-- 8 Marketing -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-teal/10 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7-7 18-2.5-7.5L3 11z"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Marketing</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Full-funnel campaigns that turn awareness into loyal customers.</p>
+          </article>
+
+          <!-- 9 Media Buying -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-navy/5 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Media Buying</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">Performance-driven acquisition across channels, measured to the last conversion.</p>
+          </article>
+
+          <!-- 10 Platform & Operations -->
+          <article class="reveal lift bg-white rounded-xl2 p-7 border border-slate-100 shadow-softer">
+            <span class="icon-circle bg-teal/10 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Platform &amp; Operations</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed">The day-to-day operational engine, run so your platforms simply perform.</p>
+          </article>
+        </div>
+
+        <p class="reveal mt-12 text-center font-display text-navy text-xl sm:text-2xl font-500">
+          Everything you need to run and grow — under one roof.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         5. INDUSTRIES  (dark navy)
+    ========================================================== -->
+    <section id="industries" class="bg-navydeep grid-texture scroll-mt-20 relative overflow-hidden">
+      <div aria-hidden="true" class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full blur-3xl opacity-20"
+           style="background: radial-gradient(circle, rgba(61,184,176,.5), transparent 60%);"></div>
+
+      <div class="relative max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="max-w-2xl reveal">
+          <p class="eyebrow text-gold">Who we serve</p>
+          <h2 class="mt-5 font-display text-white text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+            Different industries, one operational standard
+          </h2>
+          <p class="mt-5 text-ice/80 text-lg leading-relaxed">
+            Our people adapt to your sector; our standards never drop. Sodalium supports businesses across a
+            broad range of industries, including:
+          </p>
+        </div>
+
+        <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Each: icon + label -->
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Financial Services &amp; Fintech</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.5a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">E-commerce &amp; Retail</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Technology &amp; SaaS</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 22l3-9 9-3 6-6a2.8 2.8 0 0 0-4 0l-6 6-3 9-2 2z"/><path d="M14 6l4 4"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Travel &amp; Hospitality</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="10 8 16 12 10 16 10 8"/><rect x="2" y="4" width="20" height="16" rx="2.5"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Media &amp; Entertainment</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2 5 4-10 2 5h6"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Health &amp; Wellness</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 8 7 15 15 15l-.5-3.5-4-1-2 2a12 12 0 0 1-5.5-5.5l2-2-1-4L4.5 5z"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Telecommunications</h3>
+          </div>
+          <div class="reveal lift bg-white/5 border border-white/10 rounded-xl2 p-6">
+            <span class="icon-circle bg-white/5 text-teal" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5 5.5.8-4 3.9 1 5.5L12 20l-5 2.6 1-5.5-4-3.9 5.5-.8L12 2z"/></svg>
+            </span>
+            <h3 class="mt-4 text-white font-600">Consumer Brands</h3>
+          </div>
+        </div>
+
+        <p class="reveal mt-12 text-ice/75 text-lg">
+          Don't see yours? Our model flexes to fit almost any customer-facing operation.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         6. WHY SODALIUM  (light)
+    ========================================================== -->
+    <section id="why" class="bg-white scroll-mt-20">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="max-w-2xl reveal">
+          <p class="eyebrow text-navy/70">Why Sodalium</p>
+          <h2 class="mt-5 font-display text-navy text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+            A partner, not just a provider
+          </h2>
+        </div>
+
+        <div class="mt-14 grid sm:grid-cols-2 gap-5">
+          <article class="reveal lift bg-card rounded-xl2 p-8 border border-slate-100">
+            <span class="icon-circle bg-gold/15 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">One partner, the whole stack</h3>
+            <p class="mt-2 text-muted leading-relaxed">Instead of stitching together vendors, get every operational service from a single, accountable team.</p>
+          </article>
+
+          <article class="reveal lift bg-card rounded-xl2 p-8 border border-slate-100">
+            <span class="icon-circle bg-teal/15 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Human expertise, modern technology</h3>
+            <p class="mt-2 text-muted leading-relaxed">Skilled people supported by proprietary tools and automation — the best of both.</p>
+          </article>
+
+          <article class="reveal lift bg-card rounded-xl2 p-8 border border-slate-100">
+            <span class="icon-circle bg-gold/15 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Truly international</h3>
+            <p class="mt-2 text-muted leading-relaxed">A connected, multilingual team across six countries, serving clients on three continents around the clock.</p>
+          </article>
+
+          <article class="reveal lift bg-card rounded-xl2 p-8 border border-slate-100">
+            <span class="icon-circle bg-teal/15 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 5.2a3.2 3.2 0 0 1 0 5.6M17.5 20a6.5 6.5 0 0 0-3-5.4"/></svg>
+            </span>
+            <h3 class="mt-5 font-display text-navy text-xl font-600">Built on partnership</h3>
+            <p class="mt-2 text-muted leading-relaxed">We embed with your team, learn your brand, and act as an extension of it — the meaning behind our name.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         7. GLOBAL FOOTPRINT  (dark navy)
+    ========================================================== -->
+    <section id="global" class="bg-navydeep grid-texture scroll-mt-20 relative overflow-hidden">
+      <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 -right-20 w-[38rem] h-[38rem] rounded-full blur-3xl opacity-20 float-slow"
+           style="background: radial-gradient(circle, rgba(61,184,176,.5), transparent 60%);"></div>
+
+      <div class="relative max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-2 gap-14 items-start">
+          <div class="reveal">
+            <p class="eyebrow text-gold">Global</p>
+            <h2 class="mt-5 font-display text-white text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+              One connected team, across the world
+            </h2>
+            <p class="mt-5 text-ice/80 text-lg leading-relaxed">
+              Headquartered in Malta, with people across Europe, the Americas and Asia-Pacific, Sodalium
+              delivers around-the-clock service without borders.
+            </p>
+
+            <!-- Small stat callouts -->
+            <div class="mt-8 flex flex-wrap gap-3">
+              <span class="text-sm text-ice/90 bg-white/5 border border-white/10 rounded-full px-4 py-2">6 countries</span>
+              <span class="text-sm text-ice/90 bg-white/5 border border-white/10 rounded-full px-4 py-2">3 continents</span>
+              <span class="text-sm text-ice/90 bg-white/5 border border-white/10 rounded-full px-4 py-2">24/7 coverage</span>
+              <span class="text-sm text-ice/90 bg-white/5 border border-white/10 rounded-full px-4 py-2">Multiple languages</span>
+            </div>
+          </div>
+
+          <!-- Two clean lists -->
+          <div class="reveal grid sm:grid-cols-2 gap-5">
+            <div class="bg-white/5 border border-white/10 rounded-xl2 p-7">
+              <h3 class="text-gold text-sm font-600 uppercase tracking-widest">Our people</h3>
+              <ul class="mt-4 space-y-3 text-ice/90">
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>Malta</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>Latvia</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>Estonia</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>Canada</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>United States</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-teal flex-none"></span>Australia</li>
+              </ul>
+            </div>
+            <div class="bg-white/5 border border-white/10 rounded-xl2 p-7">
+              <h3 class="text-gold text-sm font-600 uppercase tracking-widest">Our clients</h3>
+              <ul class="mt-4 space-y-3 text-ice/90">
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-none"></span>United States</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-none"></span>Canada</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-none"></span>Latin America</li>
+                <li class="flex items-center gap-2.5"><span class="w-1.5 h-1.5 rounded-full bg-gold flex-none"></span>Europe</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         8. THE NAME / BRAND STORY  (light, editorial)
+    ========================================================== -->
+    <section id="name" class="bg-white scroll-mt-20">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="max-w-3xl mx-auto text-center reveal">
+          <p class="eyebrow text-navy/70 justify-center">Our name</p>
+          <h2 class="mt-6 font-display text-navy text-4xl sm:text-6xl font-600 tracking-tight">Sodalium</h2>
+
+          <!-- Pronunciation chip -->
+          <span class="mt-5 inline-flex items-center gap-2 bg-card border border-slate-200 rounded-full px-4 py-1.5 text-sm text-muted font-500">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span> so-DAH-lee-um
+          </span>
+
+          <p class="mt-8 text-ink text-xl sm:text-2xl leading-relaxed font-display font-400">
+            From the Latin <em>sodalis</em> — a companion, a comrade, a member of a close fellowship.
+            The name captures how we work: not as a distant supplier, but as part of your team.
+            When you grow, we grow with you.
+          </p>
+        </div>
+
+        <!-- Three companion pillars -->
+        <div class="mt-16 grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          <div class="reveal text-center px-6">
+            <div class="mx-auto icon-circle bg-gold/15 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v13H7l-3 3V4z"/></svg>
+            </div>
+            <h3 class="mt-4 font-display text-navy text-lg font-600">The word</h3>
+            <p class="mt-1.5 text-muted text-sm">sodalis, companion.</p>
+          </div>
+          <div class="reveal text-center px-6 sm:border-x border-slate-100">
+            <div class="mx-auto icon-circle bg-teal/15 text-teal" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M12 10v3M9.5 15.5L7 16M14.5 15.5L17 16"/></svg>
+            </div>
+            <h3 class="mt-4 font-display text-navy text-lg font-600">The idea</h3>
+            <p class="mt-1.5 text-muted text-sm">one fellowship of specialists.</p>
+          </div>
+          <div class="reveal text-center px-6">
+            <div class="mx-auto icon-circle bg-gold/15 text-navy" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3 class="mt-4 font-display text-navy text-lg font-600">The promise</h3>
+            <p class="mt-1.5 text-muted text-sm">your goals, served as if they were ours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         9. ABOUT / APPROACH  (tinted)
+    ========================================================== -->
+    <section id="about" class="bg-card scroll-mt-20">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-12 gap-12 items-start">
+          <div class="lg:col-span-5 reveal">
+            <p class="eyebrow text-navy/70">About us</p>
+            <h2 class="mt-5 font-display text-navy text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+              Years of operational expertise, brought together
+            </h2>
+          </div>
+
+          <div class="lg:col-span-7 reveal">
+            <p class="text-ink text-lg leading-relaxed">
+              Sodalium brings together an experienced managed-services operation and a specialist
+              customer-engagement team, backed by proprietary technology through a strategic partnership.
+              The result is a single company that can run — and improve — the operations that international
+              businesses depend on. Our teams have delivered customer support, retention, payments, compliance
+              and marketing operations for demanding clients across many industries and markets.
+            </p>
+
+            <!-- How we work — 3-step strip -->
+            <div class="mt-10 grid sm:grid-cols-3 gap-4">
+              <div class="bg-white rounded-xl2 p-6 border border-slate-100 shadow-softer">
+                <span class="font-display text-gold text-2xl font-600">1</span>
+                <p class="mt-2 text-sm text-ink font-500 leading-relaxed">Understand your operation and goals</p>
+              </div>
+              <div class="bg-white rounded-xl2 p-6 border border-slate-100 shadow-softer">
+                <span class="font-display text-gold text-2xl font-600">2</span>
+                <p class="mt-2 text-sm text-ink font-500 leading-relaxed">Embed the right team and tools</p>
+              </div>
+              <div class="bg-white rounded-xl2 p-6 border border-slate-100 shadow-softer">
+                <span class="font-display text-gold text-2xl font-600">3</span>
+                <p class="mt-2 text-sm text-ink font-500 leading-relaxed">Run &amp; optimise with clear reporting and continuous improvement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         10. CTA BAND  (dark navy, full-width)
+    ========================================================== -->
+    <section class="bg-navy relative overflow-hidden">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 grid-texture opacity-60"></div>
+      <div aria-hidden="true" class="pointer-events-none absolute -top-20 right-10 w-80 h-80 rounded-full blur-3xl opacity-25"
+           style="background: radial-gradient(circle, rgba(233,185,73,.4), transparent 62%);"></div>
+      <div class="relative max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-24 text-center">
+        <h2 class="reveal font-display text-white text-3xl sm:text-5xl font-600 tracking-tight max-w-3xl mx-auto leading-tight">
+          Let's run your operations better, together.
+        </h2>
+        <p class="reveal mt-5 text-ice/80 text-lg max-w-2xl mx-auto">
+          Tell us what you need to handle, and we'll show you how Sodalium can take it on.
+        </p>
+        <div class="reveal mt-9">
+          <a href="#contact" class="inline-flex justify-center items-center gap-2 bg-gold text-navydeep font-600 px-8 py-3.5 rounded-xl2 shadow-soft hover:brightness-105 transition">
+            Talk to us
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         11. CONTACT  (light)
+    ========================================================== -->
+    <section id="contact" class="bg-white scroll-mt-20">
+      <div class="max-w-content mx-auto px-5 sm:px-8 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+          <!-- Intro + details -->
+          <div class="lg:col-span-5 reveal">
+            <p class="eyebrow text-navy/70">Get in touch</p>
+            <h2 class="mt-5 font-display text-navy text-3xl sm:text-5xl font-600 leading-tight tracking-tight">
+              Start a conversation
+            </h2>
+            <p class="mt-5 text-muted text-lg leading-relaxed">
+              Tell us about your operation and what you'd like to hand over. We'll get back to you within
+              one business day.
+            </p>
+
+            <!-- Contact details block — TODO: replace placeholders -->
+            <dl class="mt-10 space-y-5">
+              <div class="flex items-start gap-3">
+                <span class="icon-circle bg-navy/5 text-navy w-10 h-10" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                </span>
+                <div>
+                  <dt class="text-xs uppercase tracking-widest text-muted font-600">Email</dt>
+                  <!-- TODO: replace email -->
+                  <dd class="mt-0.5 text-ink font-500"><a href="mailto:hello@sodalium.com" class="hover:text-navy underline decoration-gold/60 underline-offset-4">hello@sodalium.com</a></dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="icon-circle bg-navy/5 text-navy w-10 h-10" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.7-7-11a7 7 0 0 1 14 0c0 5.3-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                </span>
+                <div>
+                  <dt class="text-xs uppercase tracking-widest text-muted font-600">Location</dt>
+                  <!-- TODO: replace registered office details -->
+                  <dd class="mt-0.5 text-ink font-500">Malta (registered office)</dd>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="icon-circle bg-navy/5 text-navy w-10 h-10" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </span>
+                <div>
+                  <dt class="text-xs uppercase tracking-widest text-muted font-600">Hours</dt>
+                  <dd class="mt-0.5 text-ink font-500">24/7 operations, business hours CET for enquiries</dd>
+                </div>
+              </div>
+            </dl>
+          </div>
+
+          <!-- Form -->
+          <div class="lg:col-span-7 reveal">
+            <!--
+              TODO: wire form submission to your endpoint.
+              Currently falls back to a mailto: handler via JS (see script below).
+              Replace action with your form service (e.g. Formspree, Basin) or backend URL.
+            -->
+            <form id="contact-form" class="bg-card border border-slate-100 rounded-xl2 p-6 sm:p-8 shadow-softer"
+                  action="mailto:hello@sodalium.com" method="post" enctype="text/plain" novalidate>
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="name" class="block text-sm font-600 text-ink mb-1.5">Name</label>
+                  <input id="name" name="name" type="text" autocomplete="name" required
+                         class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-ink placeholder-muted/60 focus:border-navy transition" placeholder="Your name" />
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-600 text-ink mb-1.5">Work email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" required
+                         class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-ink placeholder-muted/60 focus:border-navy transition" placeholder="you@company.com" />
+                </div>
+                <div>
+                  <label for="company" class="block text-sm font-600 text-ink mb-1.5">Company</label>
+                  <input id="company" name="company" type="text" autocomplete="organization"
+                         class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-ink placeholder-muted/60 focus:border-navy transition" placeholder="Company name" />
+                </div>
+                <div>
+                  <label for="country" class="block text-sm font-600 text-ink mb-1.5">Country</label>
+                  <input id="country" name="country" type="text" autocomplete="country-name"
+                         class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-ink placeholder-muted/60 focus:border-navy transition" placeholder="Country" />
+                </div>
+              </div>
+              <div class="mt-5">
+                <label for="message" class="block text-sm font-600 text-ink mb-1.5">What do you need help with?</label>
+                <textarea id="message" name="message" rows="5" required
+                          class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-ink placeholder-muted/60 focus:border-navy transition resize-y" placeholder="Tell us about the operations you'd like to hand over…"></textarea>
+              </div>
+              <div class="mt-6 flex items-center gap-4 flex-wrap">
+                <button type="submit" class="inline-flex justify-center items-center gap-2 bg-gold text-navydeep font-600 px-7 py-3.5 rounded-xl2 shadow-softer hover:brightness-105 transition">
+                  Send message
+                </button>
+                <p id="form-status" role="status" aria-live="polite" class="text-sm text-muted"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       12. FOOTER  (dark navy)
+  ========================================================== -->
+  <footer class="bg-navydeep text-ice/80">
+    <div class="max-w-content mx-auto px-5 sm:px-8 py-16">
+      <div class="grid gap-12 lg:grid-cols-12">
+        <!-- Brand -->
+        <div class="lg:col-span-5">
+          <a href="#top" class="flex items-center gap-2.5" aria-label="Sodalium — home">
+            <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+              <g fill="none" stroke="#E9B949" stroke-width="2.2"><circle cx="13" cy="16" r="6.5"/><circle cx="19" cy="16" r="6.5"/></g>
+            </svg>
+            <span class="font-display text-white text-2xl font-600 tracking-tight">Sodalium</span>
+          </a>
+          <p class="mt-4 text-ice/70 max-w-xs">Managed services, done as partners.</p>
+        </div>
+
+        <!-- Nav columns mirroring the anchors -->
+        <nav class="lg:col-span-4 grid grid-cols-2 gap-8" aria-label="Footer">
+          <div>
+            <h3 class="text-white text-sm font-600 uppercase tracking-widest">Explore</h3>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="#industries" class="hover:text-white transition-colors">Industries</a></li>
+              <li><a href="#why" class="hover:text-white transition-colors">Why Sodalium</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white text-sm font-600 uppercase tracking-widest">Company</h3>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li><a href="#global" class="hover:text-white transition-colors">Global</a></li>
+              <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+              <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <!-- Contact quick -->
+        <div class="lg:col-span-3">
+          <h3 class="text-white text-sm font-600 uppercase tracking-widest">Get in touch</h3>
+          <ul class="mt-4 space-y-2.5 text-sm">
+            <!-- TODO: replace email & social links -->
+            <li><a href="mailto:hello@sodalium.com" class="hover:text-white transition-colors">hello@sodalium.com</a></li>
+            <li>Malta (registered office)</li>
+            <li><a href="#" class="hover:text-white transition-colors">LinkedIn</a> <span class="text-ice/40">/ TODO</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="my-10 border-white/10" />
+
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-ice/60">
+        <p>
+          © 2026 Sodalium. All rights reserved. ·
+          <!-- TODO: replace with real policy links -->
+          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> ·
+          <a href="#" class="hover:text-white transition-colors">Terms</a>
+        </p>
+        <p class="text-ice/45">
+          Sodalium · so-DAH-lee-um · from the Latin <em>sodalis</em>, "companion."
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       SCRIPTS — mobile nav, sticky header, scroll-reveal, form
+  ========================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---------- Sticky header: transparent → solid navy after ~80px ---------- */
+      var header = document.getElementById('site-header');
+      function onScroll() {
+        if (window.scrollY > 80) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* ---------- Mobile nav toggle ---------- */
+      var toggle = document.getElementById('nav-toggle');
+      var menu = document.getElementById('mobile-menu');
+      var iconOpen = document.getElementById('icon-open');
+      var iconClose = document.getElementById('icon-close');
+
+      function setMenu(open) {
+        menu.classList.toggle('hidden', !open);
+        iconOpen.classList.toggle('hidden', open);
+        iconClose.classList.toggle('hidden', !open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      toggle.addEventListener('click', function () {
+        setMenu(menu.classList.contains('hidden'));
+      });
+      // Close menu when a mobile link is tapped
+      document.querySelectorAll('.mobile-link').forEach(function (link) {
+        link.addEventListener('click', function () { setMenu(false); });
+      });
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+          setMenu(false);
+          toggle.focus();
+        }
+      });
+
+      /* ---------- Scroll-reveal via IntersectionObserver ---------- */
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var revealEls = document.querySelectorAll('.reveal');
+
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        // Show everything immediately — no motion.
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(function (el) { io.observe(el); });
+      }
+
+      /* ---------- Contact form: graceful mailto: fallback ----------
+         TODO: replace this with a real submission handler / endpoint.
+         For now, we build a mailto: link from the fields so the form
+         is functional out of the box without a backend. */
+      var form = document.getElementById('contact-form');
+      var status = document.getElementById('form-status');
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!form.checkValidity()) { form.reportValidity(); return; }
+          var data = new FormData(form);
+          var subject = encodeURIComponent('New enquiry from ' + (data.get('name') || 'website'));
+          var body = encodeURIComponent(
+            'Name: ' + (data.get('name') || '') + '\n' +
+            'Work email: ' + (data.get('email') || '') + '\n' +
+            'Company: ' + (data.get('company') || '') + '\n' +
+            'Country: ' + (data.get('country') || '') + '\n\n' +
+            (data.get('message') || '')
+          );
+          // TODO: replace hello@sodalium.com with your real inbox
+          window.location.href = 'mailto:hello@sodalium.com?subject=' + subject + '&body=' + body;
+          status.textContent = 'Opening your email app… if nothing happens, email us at hello@sodalium.com.';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
